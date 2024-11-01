@@ -13,7 +13,8 @@ function onSignIn(googleUser) {
 function loadGoogleAPI() {
     gapi.load('auth2', function() {
         gapi.auth2.init({
-            client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com' // Replace with your client ID
+            client_id: '140751697388-4joov14ha8av1dcv68q46ko3pj278ecv.apps.googleusercontent.com', // Your Client ID
+            scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email' // Add your scopes here
         });
     });
 }
