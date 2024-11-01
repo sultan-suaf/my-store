@@ -2,19 +2,36 @@
 
 // Google Sign-In function
 function onSignIn(googleUser) {
-    const profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
+    const id_token = googleUser.getAuthResponse().id_token;
+
+    // Send the ID token to your backend for verification
+    fetch('http://localhost:5000/auth/google', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: id_token }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Store user data in local storage
+        localStorage.setItem('userName', data.user.name);
+        localStorage.setItem('userEmail', data.user.email);
+        localStorage.setItem('userImage', data.user.picture);
+
+        // Redirect to the home page
+        window.location.href = 'home.html';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 // Load the Google API client
 function loadGoogleAPI() {
     gapi.load('auth2', function() {
         gapi.auth2.init({
-            client_id: '140751697388-4joov14ha8av1dcv68q46ko3pj278ecv.apps.googleusercontent.com', // Your Client ID
-            scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email' // Add your scopes here
+            client_id: '140751697388-4joov14ha8av1dcv68q46ko3pj278ecv.apps.googleusercontent.com'
         });
     });
 }

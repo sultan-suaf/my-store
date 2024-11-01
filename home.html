@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - My Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">MyStore</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="categories.html">Categories</a></li>
+                <li><a href="cart.html">Cart (0)</a></li>
+                <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome, <span id="userName"></span>!</h1>
+        <img id="userImage" src="" alt="User Image">
+        <p>Your email: <span id="userEmail"></span></p>
+    </main>
+
+    <script>
+        // Load user information from local storage
+        document.getElementById('userName').innerText = localStorage.getItem('userName');
+        document.getElementById('userEmail').innerText = localStorage.getItem('userEmail');
+        document.getElementById('userImage').src = localStorage.getItem('userImage');
+
+        // Logout function
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.clear();
+            window.location.href = 'index.html'; // Redirect to login page
+        });
+    </script>
+</body>
+</html>
